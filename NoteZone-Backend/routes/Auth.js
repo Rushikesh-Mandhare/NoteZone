@@ -105,10 +105,11 @@ router.post('/login', [
             }
         };
 
-        jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
+        jwt.sign(payload, JWT_SECRET, (err, token) => {
             if (err) throw err;
             res.json({ token });
         });
+        
 
     } catch (err) {
         console.error('Error logging in:', err);
