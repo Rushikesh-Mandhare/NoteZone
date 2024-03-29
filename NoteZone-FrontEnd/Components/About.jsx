@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import NotesContext from '../context/NotesContext';
+
 
 const About = () => {
+  const a= useContext(NotesContext)
   return (
     <div>
-      this is my about us page
+      My Name is {a.Name}
     </div>
   )
 }

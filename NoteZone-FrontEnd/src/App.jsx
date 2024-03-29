@@ -3,17 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Im
 import Home from "../Components/Home";
 import Navbar from "../Components/Navbar";
 import About from "../Components/About";
+import NotesState from '../context/NotesState';
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes> {/* Wrap Routes with a Routes element */}
-        <Route path="/" element={<Home />} /> 
-        <Route path="/About" element={<About />} />
-        
-      </Routes>
-    </Router>
+    <NotesState>
+      <Router>
+        <Navbar />
+        <div className="container">
+        <Routes> {/* Wrap Routes with a Routes element */}
+          <Route path="/" element={<Home />} />
+          <Route path="/About" element={<About />} />
+        </Routes>
+        </div>
+      </Router>
+    </NotesState>
   );
 }
 

@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const verifyToken= require('../middleware/getuser')
+const verifyToken= require('../middleware/getuser');
 
 // Declare JWT secret key
 const JWT_SECRET = 'Rushikesh_Mandhare_2705';
@@ -56,7 +56,7 @@ router.post('/createuser', [
             }
         };
 
-        jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
+        jwt.sign(payload, JWT_SECRET, (err, token) => {
             if (err) throw err;
             res.json({ token });
         });
