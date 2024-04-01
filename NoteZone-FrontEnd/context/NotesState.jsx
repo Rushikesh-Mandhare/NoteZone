@@ -2,89 +2,105 @@ import { useState } from "react";
 import NotesContext from "./NotesContext";
 
 const NotesState = (props) => {
+    const host = "http://localhost:3000";
+    const initialNotes = [];
 
-    const initialNotes= [
-        {
-            "_id": "6606f74c72f11cd741529336",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Avengers",
-            "description": "Join The Avengers",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:15:56.487Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f78372f11cd741529338",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Team Web Worriors",
-            "description": "Web Worriors Secret meating",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:16:51.826Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f7w4c72f11cd741529336",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Avengers",
-            "description": "Join The Avengers",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:15:56.487Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f78f372f11cd741529338",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Team Web Worriors",
-            "description": "Web Worriors Secret meating",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:16:51.826Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f74ddc72f11cd741529336",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Avengers",
-            "description": "Join The Avengers",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:15:56.487Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f78372dsf11cd741529338",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Team Web Worriors",
-            "description": "Web Worriors Secret meating",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:16:51.826Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f74c72fssw11cd741529336",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Avengers",
-            "description": "Join The Avengers",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:15:56.487Z",
-            "__v": 0
-        },
-        {
-            "_id": "6606f7837as2f11cd741529338",
-            "user": "6606f4e78dd0a90bbdde4414",
-            "title": "Team Web Worriors",
-            "description": "Web Worriors Secret meating",
-            "tag": "Top Secret",
-            "date": "2024-03-29T17:16:51.826Z",
-            "__v": 0
+    const [notes, setNotes] = useState(initialNotes);
+
+    // Get all Notes
+    const getNotes = async () => {
+        try {
+            const response = await fetch(`${host}/notes/fetchallnotes`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwYWI3NTRkNTlkZTZhOTIxZjdjNGNjIn0sImlhdCI6MTcxMTk3ODMyNH0.nmh8Hcg5b8DmIJ_bndDrX-tl9AR77oR8DUGvibwEvhE'
+                },
+            });
+            const json = await response.json();
+            setNotes(json); // assuming response is an array of notes
+        } catch (error) {
+            console.error('Error fetching notes:', error);
         }
-    ]
+    };
 
-    const [notes, setNotes] = useState(initialNotes)
+    // Add Note
+    const add = async (title, description, tag) => {
+        try {
+            const response = await fetch(`${host}/notes/addnote`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwYWI3NTRkNTlkZTZhOTIxZjdjNGNjIn0sImlhdCI6MTcxMTk3ODMyNH0.nmh8Hcg5b8DmIJ_bndDrX-tl9AR77oR8DUGvibwEvhE'
+                },
+                body: JSON.stringify({ title, description, tag })
+            });
+            const newNote = await response.json();
+            setNotes(prevNotes => [...prevNotes, newNote]);
+        } catch (error) {
+            console.error('Error adding note:', error);
+        }
+    };
+
+    // Delete Note
+
+   
+    
+    const deleteNote = async(id) => {
+
+         //API Call
+
+         
+            const response = await fetch(`${host}/notes/deletenote/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwYWI3NTRkNTlkZTZhOTIxZjdjNGNjIn0sImlhdCI6MTcxMTk3ODMyNH0.nmh8Hcg5b8DmIJ_bndDrX-tl9AR77oR8DUGvibwEvhE'
+                },
+                body: JSON.stringify()
+            });
+            const json = await response.json();
+            console.log(json)
+         
+        console.log("Deleting the Note with id " + id);
+        setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
+    };
+
+    // Edit Note
+    const editNote = async (id, title, description, tag) => {
+        try {
+            const response = await fetch(`${host}/notes/updatenote/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwYWI3NTRkNTlkZTZhOTIxZjdjNGNjIn0sImlhdCI6MTcxMTk3ODMyNH0.nmh8Hcg5b8DmIJ_bndDrX-tl9AR77oR8DUGvibwEvhE'
+                },
+                body: JSON.stringify({ title, description, tag })
+            });
+            const updatedNote = await response.json();
+
+            // Update the note in state
+            setNotes(prevNotes => prevNotes.map(note => {
+                if (note._id === id) {
+                    return {
+                        ...note,
+                        title: updatedNote.title,
+                        description: updatedNote.description,
+                        tag: updatedNote.tag
+                    };
+                }
+                return note;
+            }));
+        } catch (error) {
+            console.error('Error editing note:', error);
+        }
+    };
 
     return (
-        <NotesContext.Provider value={{notes, setNotes}}>
+        <NotesContext.Provider value={{ notes, add, deleteNote, editNote, getNotes }}>
             {props.children}
         </NotesContext.Provider>
-    )
-}
+    );
+};
 
-export default NotesState; 
+export default NotesState;
