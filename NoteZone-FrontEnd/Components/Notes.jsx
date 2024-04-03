@@ -35,7 +35,7 @@ const Notes = () => {
         console.log("Updating the Note", note)
         editNote(note.id, note.title, note.description, note.tag )
         refClose.current.click()
-        // event.preventDefault(); // Prevent default form submission behavior
+        event.preventDefault(); // Prevent default form submission behavior
         // add(note.title, note.description, note.tag);
         // setNote({ title: "", description: "", tag: "" }); // Clear input fields after submission
         // setShowModal(false); // Close the modal after saving changes

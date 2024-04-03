@@ -36,36 +36,32 @@ const NotesState = (props) => {
                 body: JSON.stringify({ title, description, tag })
             });
             const newNote = await response.json();
-            setNotes(prevNotes => [...prevNotes, newNote]);
+            setNotes([...notes, newNote]); // Assuming the response contains the new note object
         } catch (error) {
             console.error('Error adding note:', error);
         }
     };
-
-    // Delete Note
-
-   
     
-    const deleteNote = async(id) => {
 
-         //API Call
+    //delete Note
 
-         
+    const deleteNote = async (id) => {
+        try {
             const response = await fetch(`${host}/notes/deletenote/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwYWI3NTRkNTlkZTZhOTIxZjdjNGNjIn0sImlhdCI6MTcxMTk3ODMyNH0.nmh8Hcg5b8DmIJ_bndDrX-tl9AR77oR8DUGvibwEvhE'
                 },
-                body: JSON.stringify()
+                body: JSON.stringify({ id }) // Pass the id in the body
             });
             const json = await response.json();
-            console.log(json)
-         
-        console.log("Deleting the Note with id " + id);
-        setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
+            setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
+        } catch (error) {
+            console.error('Error deleting note:', error);
+        }
     };
-
+    
     // Edit Note
     const editNote = async (id, title, description, tag) => {
         try {

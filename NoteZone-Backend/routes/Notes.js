@@ -38,8 +38,7 @@ router.post('/addnote', verifyToken, [
         const note = new Notes({
             title,
             description,
-            tag,
-            user
+            tag
         });
 
         const savedNote = await note.save();

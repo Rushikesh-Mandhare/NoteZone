@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const verifyToken= require('../middleware/getuser');
+const verifyToken = require('../middleware/getuser');
 
 // Declare JWT secret key
 const JWT_SECRET = 'Rushikesh_Mandhare_2705';
@@ -25,14 +25,14 @@ router.post('/createuser', [
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success: false, errors: errors.array() });
     }
 
     try {
         // Check if user already exists
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
+            return res.status(400).json({ success: false, errors: [{ msg: 'User already exists' }] });
         }
 
         // Hashing the password
@@ -58,12 +58,12 @@ router.post('/createuser', [
 
         jwt.sign(payload, JWT_SECRET, (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json({ success: true, token });
         });
 
     } catch (err) {
         console.error('Error saving user:', err);
-        res.status(500).send('Error saving user');
+        res.status(500).json({ success: false, message: 'Error saving user' });
     }
 });
 
@@ -80,7 +80,7 @@ router.post('/login', [
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success: false, errors: errors.array() });
     }
 
     const { email, password } = req.body;
@@ -89,13 +89,13 @@ router.post('/login', [
         // Check if user exists
         let user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+            return res.status(400).json({ success: false, errors: [{ msg: 'Invalid Credentials' }] });
         }
 
         // Check if password matches
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+            return res.status(400).json({ success: false, errors: [{ msg: 'Invalid Credentials' }] });
         }
 
         // Generating JWT token
@@ -107,13 +107,12 @@ router.post('/login', [
 
         jwt.sign(payload, JWT_SECRET, (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json({ success: true, token });
         });
-        
 
     } catch (err) {
         console.error('Error logging in:', err);
-        res.status(500).send('Server Error');
+        res.status(500).json({ success: false, message: 'Server Error' });
     }
 });
 
@@ -122,14 +121,13 @@ router.post('/getuser', verifyToken, async (req, res) => {
         // Find the user by ID extracted from the JWT payload
         const user = await User.findById(req.user.id).select('-password');
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
-        res.send(user);
+        res.json({ success: true, user });
     } catch (err) {
         console.error('Error fetching user:', err);
-        res.status(500).send('Server Error');
+        res.status(500).json({ success: false, message: 'Server Error' });
     }
 });
-
 
 module.exports = router;

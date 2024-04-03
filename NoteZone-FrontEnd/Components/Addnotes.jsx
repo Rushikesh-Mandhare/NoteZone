@@ -36,7 +36,7 @@ const AddNote = () => {
                         <input type="text" className="form-control" id="tag" name="tag" placeholder="Tag" value={note.tag} onChange={onChange} />
                     </div>
 
-                    <button type="submit" className="btn btn-primary d-flex justify-content-between align-items-center">
+                    <button type="submit" className="btn btn-primary d-flex justify-content-between align-items-center"disabled={note.title.length<5 ||note.description.length<5} >
                         <lord-icon
                             src="https://cdn.lordicon.com/zrkkrrpl.json"
                             trigger="hover"

@@ -11,11 +11,11 @@ const Navbar = () => {
 
 
   return (
-    <nav className="navbar navbar-expand-lg bg-primary navbar-dark" >
+    <nav className="navbar navbar-expand-lg bg-dark navbar-dark" >
 
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img src={logo} alt="Logo" style={{ width: "60px", height: "60px", marginRight: "10px" }} />
+          <img src={logo} alt="Logo" style={{ width: "45px", height: "40px", marginRight: "10px" }} />
           NoteZone
         </Link>
 
@@ -32,10 +32,8 @@ const Navbar = () => {
             </li>
 
           </ul>
-          <form className="d-flex" role="search">
-            <input className="form-control me-2 bg-primary" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success btn-outline-light" type="submit">Search</button>
-          </form>
+          <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
+          <Link className="btn btn-primary mx-1" to="/signup" role="button">SignUp</Link>
 
         </div>
       </div>
