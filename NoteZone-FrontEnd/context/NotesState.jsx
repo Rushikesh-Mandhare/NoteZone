@@ -70,7 +70,7 @@ const NotesState = (props) => {
     const editNote = async (id, title, description, tag) => {
         try {
             const response = await fetch(`${host}/notes/updatenote/${id}`, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwYWI3NTRkNTlkZTZhOTIxZjdjNGNjIn0sImlhdCI6MTcxMTk3ODMyNH0.nmh8Hcg5b8DmIJ_bndDrX-tl9AR77oR8DUGvibwEvhE'

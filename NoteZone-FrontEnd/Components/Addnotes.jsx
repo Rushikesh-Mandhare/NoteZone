@@ -10,7 +10,7 @@ const AddNote = () => {
     const handleSubmit = (event) => {
         event.preventDefault(); // Prevent default form submission behavior
         add(note.title, note.description, note.tag);
-        setNote({ title: "", description: "", tag: "" }); // Clear input fields after submission
+        setNote({ title: "", description: "", tag: "Default" }); // Reset tag to default value
     };
 
     const onChange = (e) => {
