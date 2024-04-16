@@ -12,11 +12,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark" >
 
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          <img src={logo} alt="Logo" style={{ width: "60px", height: "60px", marginRight: "10px" }} />
-          NoteZone
-        </Link>
-
+        <Link className="navbar-brand" to="/">NoteZone</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -35,9 +31,9 @@ const Navbar = () => {
           <Link className="btn btn-primary mx-1" to="/signup" role="button">SignUp</Link>
 =======
           <form className="d-flex" role="search">
-            <input className="form-control me-2 bg-primary" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success btn-outline-light" type="submit">Search</button>
-          </form>
+  <input className="form-control me-2 bg-primary" type="search" placeholder="Search" aria-label="Search" />
+  <button className="btn btn-outline-success btn-outline-light" type="submit">Search</button>
+</form>
 
         </div>
       </div>
