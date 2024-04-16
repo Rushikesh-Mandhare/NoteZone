@@ -35,9 +35,8 @@ const AddNote = () => {
                         <label htmlFor="tag"><h4>Tag</h4></label>
                         <input type="text" className="form-control" id="tag" name="tag" placeholder="Tag" value={note.tag} onChange={onChange} />
                     </div>
-<<<<<<< HEAD
 
-                    <button type="submit" className="btn btn-primary d-flex justify-content-between align-items-center"disabled={note.title.length<5 ||note.description.length<5} >
+                    <button type="submit" className="btn btn-primary d-flex justify-content-between align-items-center">
                         <lord-icon
                             src="https://cdn.lordicon.com/zrkkrrpl.json"
                             trigger="hover"
@@ -46,10 +45,6 @@ const AddNote = () => {
                             colors="primary:#ffffff,,secondary:#e4e4e4"
                             style={{ width: "25px", height: "40px", marginRight: "10px"}}>
                         </lord-icon>Add Note</button>
-=======
-                    
-                    <button type="submit" className="btn btn-primary">Add Note</button>
->>>>>>> parent of f8342b0 (initial commit)
                 </form>
             </div>
         </>
